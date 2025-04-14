@@ -1,0 +1,9 @@
+services:
+  event_api_block.api_client:
+    class: Drupal\event_api_block\EventApiClient
+    arguments: ['@http_client']
+
+  event_api_block.notification_client:
+    class: Drupal\event_api_block\NotificationApiClient
+    arguments: ['@http_client']
+

@@ -1,0 +1,7 @@
+name: 'Event API Block'
+type: module
+description: 'Displays events from an external microservice.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:block

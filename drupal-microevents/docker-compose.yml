@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  drupal:
+    image: drupal:10
+    ports:
+      - "8080:80"
+    depends_on:
+      - drupal_db
+    volumes:
+      - ./modules:/var/www/html/modules
+      - ./themes:/var/www/html/themes
+      - ./sites:/var/www/html/sites
+
+  drupal_db:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupaluser
+      MYSQL_PASSWORD: drupalpass
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - drupal_db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+volumes:
+  drupal_db_data:

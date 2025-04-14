@@ -1,0 +1,41 @@
+
+services: 
+  event:
+    build: ./services/event-service
+    ports: 
+    - "8001:80"
+    volumes:
+      - /mnt/p/microevents-tracker/services/event-service:/app
+
+  notify:
+    build: ./services/notify-service
+    ports:
+      - "8002:80"
+    volumes:
+     - /mnt/p/microevents-tracker/services/notify-service:/app
+
+    
+  frontend:
+    build: ./services/frontend
+    ports:
+      - "8000:80"
+    volumes:
+     - /mnt/p/microevents-tracker/services/frontend:/app  
+
+  db:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eventsdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+    ports:
+      - "3306:3306"   
+    volumes:
+      - db_data:/var/lib/mysql
+      - /mnt/p/microevents-tracker/services/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
